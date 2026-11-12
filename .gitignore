@@ -3,6 +3,7 @@ dist/
 .env
 .env.*
 !.env.example
+# Legacy local resume folder (resumes are now stored in MongoDB)
 server/uploads/
 .DS_Store
 Thumbs.db

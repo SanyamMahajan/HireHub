@@ -21,7 +21,7 @@ Built during my **Full Stack MERN Developer Training at EdibleWebTech LLP, Amrit
 - JWT authentication with bcrypt password hashing
 - Role-based access control (`candidate` / `recruiter`) on both API and UI
 - Ownership checks: recruiters only manage their own jobs and applicants
-- Resume uploads restricted to PDF and 2 MB, stored with random file names, downloadable only by the candidate and the job's recruiter
+- Resume uploads restricted to real PDFs (type + `%PDF-` signature check) up to 2 MB, **stored in MongoDB** (separate `resumes` collection) so they survive restarts on cloud hosts, and downloadable only by the candidate and the job's recruiter
 - Central error handling with clear validation messages; Helmet and CORS configured
 
 ## Tech stack
@@ -39,8 +39,8 @@ HireHub/
 ├── server/                 # Express REST API
 │   └── src/
 │       ├── config/         # env + DB connection
-│       ├── models/         # User, Job, Application (Mongoose)
-│       ├── middleware/     # auth (JWT + roles), upload (multer), errors
+│       ├── models/         # User, Job, Application, Resume (Mongoose)
+│       ├── middleware/     # auth (JWT + roles), upload (multer, in-memory), errors
 │       ├── controllers/    # auth, jobs, applications, stats
 │       ├── routes/         # all /api routes
 │       └── seed.js         # demo data

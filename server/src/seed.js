@@ -4,6 +4,7 @@ import { connectDB } from "./config/db.js";
 import { User } from "./models/User.js";
 import { Job } from "./models/Job.js";
 import { Application } from "./models/Application.js";
+import { Resume } from "./models/Resume.js";
 
 const DEMO_PASSWORD = "demo1234";
 
@@ -81,8 +82,8 @@ const jobs = [
 ];
 
 await connectDB();
-await Promise.all([User.deleteMany({}), Job.deleteMany({}), Application.deleteMany({})]);
-await Promise.all([User.init(), Job.init(), Application.init()]); // ensure indexes exist
+await Promise.all([User.deleteMany({}), Job.deleteMany({}), Application.deleteMany({}), Resume.deleteMany({})]);
+await Promise.all([User.init(), Job.init(), Application.init(), Resume.init()]); // ensure indexes exist
 
 const recruiter = await User.create({
   name: "Demo Recruiter",

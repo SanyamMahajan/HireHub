@@ -1,9 +1,7 @@
-import fs from "node:fs/promises";
-import path from "node:path";
 import mongoose from "mongoose";
 import { Job, JOB_TYPES, WORK_MODES } from "../models/Job.js";
 import { Application } from "../models/Application.js";
-import { RESUME_DIR } from "../middleware/upload.js";
+import { Resume } from "../models/Resume.js";
 import { ApiError } from "../utils/ApiError.js";
 
 const EDITABLE = ["title", "company", "location", "type", "workMode", "experience", "salaryMin", "salaryMax", "skills", "description", "status"];
@@ -90,11 +88,11 @@ export async function updateJob(req, res) {
   res.json({ job });
 }
 
-// DELETE /api/jobs/:id  (owner recruiter) - also removes its applications and resume files
+// DELETE /api/jobs/:id  (owner recruiter) - also removes its applications and their resumes
 export async function deleteJob(req, res) {
   const job = await findOwnedJob(req.params.id, req.user);
-  const apps = await Application.find({ job: job._id }).select("resume.filename");
-  await Promise.all(apps.map((a) => fs.rm(path.join(RESUME_DIR, a.resume.filename), { force: true })));
+  const resumeIds = await Application.find({ job: job._id }).distinct("resume.file");
+  await Resume.deleteMany({ _id: { $in: resumeIds } });
   await Application.deleteMany({ job: job._id });
   await job.deleteOne();
   res.status(204).end();
