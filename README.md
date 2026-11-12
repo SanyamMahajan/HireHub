@@ -2,6 +2,8 @@
 
 HireHub is a full-stack job portal built with the **MERN stack** (MongoDB, Express, React, Node.js). Recruiters post jobs and manage applicants. Candidates search jobs, apply with their resume and track every application.
 
+**🔗 Live demo:** https://hire-hub-my55.vercel.app &nbsp;·&nbsp; **API:** https://hire-hub-gray.vercel.app/api/health
+
 Built during my **Full Stack MERN Developer Training at EdibleWebTech LLP, Amritsar (June–July 2026)**.
 
 ## Features
